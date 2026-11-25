@@ -60,4 +60,17 @@ class CalculatorControllerTests {
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.detail").exists());
     }
+
+    @ParameterizedTest
+    @CsvSource({
+        "/api/calc/power?base=-8&exponent=0.5",
+        "/api/calc/power?base=10&exponent=400",
+        "/api/calc/multiply?a=1e308&b=10",
+        "/api/calc/add?a=NaN&b=1"
+    })
+    void nonFiniteResultsAreRejected(String url) throws Exception {
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Invalid input"));
+    }
 }

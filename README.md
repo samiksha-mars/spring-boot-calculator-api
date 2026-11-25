@@ -7,7 +7,8 @@ is required — each request is computed on the fly.
 
 - Add, subtract, multiply, divide
 - Power and square root
-- Input validation (divide-by-zero and negative square root return `400`)
+- Input validation (divide-by-zero, negative square root, missing or non-numeric
+  parameters, and results that overflow or are not a number return `400`)
 - RFC 7807 `ProblemDetail` error responses
 
 ## Tech Stack
