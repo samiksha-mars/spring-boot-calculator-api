@@ -53,8 +53,11 @@ class CalculatorControllerTests {
     @Test
     void missingOrNonNumericParameterReturns400() throws Exception {
         mockMvc.perform(get("/api/calc/add").param("a", "1"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.detail").value("Required parameter 'b' is not present."));
         mockMvc.perform(get("/api/calc/add").param("a", "1").param("b", "two"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").exists());
     }
 }
